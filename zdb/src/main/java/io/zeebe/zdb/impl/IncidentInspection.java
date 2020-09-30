@@ -15,13 +15,23 @@ import io.zeebe.engine.state.ZbColumnFamilies;
 import io.zeebe.engine.state.ZeebeState;
 import io.zeebe.engine.state.instance.ElementInstance;
 import io.zeebe.engine.state.instance.Incident;
+import io.zeebe.engine.state.instance.KeyIncidentPair;
 import io.zeebe.protocol.impl.encoding.MsgPackConverter;
 import io.zeebe.protocol.impl.record.value.incident.IncidentRecord;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 public class IncidentInspection {
+
+  public void forEach(final PartitionState partitionState, Consumer<KeyIncidentPair> consumer) {
+    final ColumnFamily<DbLong, Incident> incidentColumnFamily =
+        getIncidentColumnFamily(partitionState);
+
+    incidentColumnFamily.forEach(
+        (key, incident) -> consumer.accept(new KeyIncidentPair(key.getValue(), incident)));
+  }
 
   public List<String> list(final PartitionState partitionState) {
 

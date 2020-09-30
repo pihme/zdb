@@ -24,7 +24,8 @@ import picocli.CommandLine.RunLast;
       BlacklistCommand.class,
       IncidentCommand.class,
       WorkflowCommand.class,
-      LogCommand.class
+      LogCommand.class,
+      ImportIntoNeo4JCommand.class
     })
 public class ZeebeDebugger implements Callable<Integer> {
 

@@ -16,8 +16,13 @@ import io.zeebe.engine.state.deployment.PersistedWorkflow;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 public final class WorkflowInspection {
+
+  public void forEach(final PartitionState partitionState, Consumer<PersistedWorkflow> consumer) {
+    getColumnFamily(partitionState).forEach(consumer);
+  }
 
   public List<String> list(final PartitionState partitionState) {
     final List<String> workflows = new ArrayList<>();
